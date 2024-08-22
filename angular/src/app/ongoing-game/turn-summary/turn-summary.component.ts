@@ -67,7 +67,9 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
     this.subscriptions.concat(
       this.$playerStates.pipe(
         map((players: PlayerState[]) =>
-          players.reduce((prev, current) => prev + (current.hand || 0), 0) / players.length || 0))
+          players
+            .filter(player => player.hand != -1)
+            .reduce((prev, current) => prev + (current.hand || 0), 0) / players.filter(player => player.hand != -1).length || 0))
       .subscribe((value) => this.average = value));
 
     this.subscriptions.concat(

@@ -14,7 +14,7 @@ export const decks: Deck[] = [
     name: 'FIBONACCI',
     textValues: false,
     values: [
-      { value: 0, display: 0 },
+      { value: -1, display: "?" },
       { value: 1, display: 1 },
       { value: 2, display: 2 },
       { value: 3, display: 3 },
@@ -31,6 +31,7 @@ export const decks: Deck[] = [
     name: 'MODIFIED_FIBONACCI',
     textValues: false,
     values: [
+      { value: -1, display: "?" },
       { value: 0, display: 0 },
       { value: 0.5, display: 0.5 },
       { value: 1, display: 1 },
@@ -48,6 +49,7 @@ export const decks: Deck[] = [
     name: 'POWERS',
     textValues: false,
     values: [
+      { value: -1, display: "?" },
       { value: 0, display: 0 },
       { value: 1, display: 1 },
       { value: 2, display: 2 },
@@ -62,6 +64,7 @@ export const decks: Deck[] = [
     name: 'TRUST_VOTE',
     textValues: false,
     values: [
+      { value: -1, display: "?" },
       { value: 0, display: 0 },
       { value: 1, display: 1 },
       { value: 2, display: 2 },
@@ -74,6 +77,7 @@ export const decks: Deck[] = [
     name: 'T_SHIRTS',
     textValues: true,
     values: [
+      { value: -1, display: '?' },
       { value: 1, display: 'XXS' },
       { value: 2, display: 'XS' },
       { value: 3, display: 'S' },
