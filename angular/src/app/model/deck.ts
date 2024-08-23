@@ -15,6 +15,7 @@ export const decks: Deck[] = [
     textValues: false,
     values: [
       { value: -1, display: "?" },
+      { value: 0, display: 0 },
       { value: 1, display: 1 },
       { value: 2, display: 2 },
       { value: 3, display: 3 },
