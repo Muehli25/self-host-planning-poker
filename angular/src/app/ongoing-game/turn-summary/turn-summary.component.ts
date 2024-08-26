@@ -1,18 +1,18 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { PlayerState } from '../../model/events';
-import { filter, map, Observable, Subscription, tap, withLatestFrom } from 'rxjs';
-import { Deck, decksDict, displayCardValue } from '../../model/deck';
-import { AsyncPipe, KeyValue, KeyValuePipe, NgClass, NgFor } from '@angular/common';
-import { CurrentGameService } from '../current-game.service';
+import {AfterViewInit, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
+import {PlayerState} from '../../model/events';
+import {filter, map, Observable, Subscription, tap, withLatestFrom} from 'rxjs';
+import {Deck, decksDict, displayCardValue} from '../../model/deck';
+import {AsyncPipe, KeyValue, KeyValuePipe, NgClass, NgFor} from '@angular/common';
+import {CurrentGameService} from '../current-game.service';
 import confetti from 'canvas-confetti';
-import { TranslocoDecimalPipe, TranslocoPercentPipe } from '@jsverse/transloco-locale';
+import {TranslocoDecimalPipe, TranslocoPercentPipe} from '@jsverse/transloco-locale';
 import {TranslocoDirective, TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
-    selector: 'shpp-turn-summary',
-    templateUrl: './turn-summary.component.html',
-    styleUrls: ['./turn-summary.component.scss'],
-    standalone: true,
+  selector: 'shpp-turn-summary',
+  templateUrl: './turn-summary.component.html',
+  styleUrls: ['./turn-summary.component.scss'],
+  standalone: true,
   imports: [
     TranslocoDirective, NgFor, NgClass, AsyncPipe, KeyValuePipe, TranslocoPipe, TranslocoPercentPipe, TranslocoDecimalPipe]
 })
@@ -22,8 +22,8 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
   displayCardValue = displayCardValue;
   Number = Number;
   round = Math.round;
-  valueDescOrder = (a: KeyValue<string, number>, b: KeyValue<string, number>): number =>
-    a.value > b.value ? -1 : (b.value > a.value ? 1 : 0)
+  valueDescOrder = (a: KeyValue<string, string>, b: KeyValue<string, string>): number =>
+    a.value > b.value ? -1 : (Number(b.value) > Number(a.value) ? 1 : 0)
 
   deck: Deck = decksDict['FIBONACCI'];
   average = 0;
@@ -37,52 +37,56 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
 
   constructor(private currentGameService: CurrentGameService) {
     this.$playerStates = this.currentGameService.state$
-    .pipe(
-      withLatestFrom(this.currentGameService.gameInfo$),
-      filter(([, gameInfo]) => gameInfo !== null && gameInfo.revealed),
-      tap(([, gameInfo]) => {
-        if (gameInfo) {
-          this.deck = decksDict[gameInfo.deck];
-        }
-      }),
-      map(([gameState]) => Object.values(gameState)),
-      map((playerStates: PlayerState[]) => playerStates.filter((state) => state.hand !== undefined && state.hand !== null))
-    );
+      .pipe(
+        withLatestFrom(this.currentGameService.gameInfo$),
+        filter(([, gameInfo]) => gameInfo !== null && gameInfo.revealed),
+        tap(([, gameInfo]) => {
+          if (gameInfo) {
+            this.deck = decksDict[gameInfo.deck];
+          }
+        }),
+        map(([gameState]) => Object.values(gameState)),
+        map((playerStates: PlayerState[]) => playerStates.filter((state) => state.hand !== undefined && state.hand !== null))
+      );
 
     this.$counts = this.$playerStates
-    .pipe(map((players: PlayerState[]) =>
-      players
-      .map((player) => player.hand || 0)
-      .reduce((previous, current) => {
-        let num = previous.get(current.toString()) || 0;
-        previous.set(current.toString(), num + 1);
-        return previous;
-      }, new Map() as CardCount)
-    ));
+      .pipe(map((players: PlayerState[]) =>
+        players
+          .map((player) => player.hand || 0)
+          .reduce((previous, current) => {
+            let numString = previous.get(current.toString()) || "0";
+            let num = 0;
+            if (this.isNumeric(numString)) num = Number(numString)
+            num += 1
+            previous.set(current.toString(), num.toString());
+            return previous;
+          }, new Map() as CardCount)
+      ));
 
     this.$agreement = this.$counts
-    .pipe(
-      withLatestFrom(this.$playerStates),
-      map(([counts, players]) => (Math.max(0, ...counts.values()) / players.length || 0)));
+      .pipe(
+        withLatestFrom(this.$playerStates),
+        map(([counts, players]) => (Math.max(0, Number(...counts.values())) / players.length || 0)));
 
     this.subscriptions.concat(
       this.$playerStates.pipe(
-        map((players: PlayerState[]) =>
-          players
-            .filter(player => player.hand != -1)
-            .reduce((prev, current) => prev + (current.hand || 0), 0) / players.filter(player => player.hand != -1).length || 0))
-      .subscribe((value) => this.average = value));
+        map((players: PlayerState[]) => {
+          const validPlayers = players.filter((player) => player.hand !== "-1" && this.isNumeric(player.hand));
+          const total = validPlayers.reduce((prev, current) => prev + (Number(current.hand) || 0), 0);
+          return validPlayers.length > 0 ? total / validPlayers.length : 0;
+        }))
+        .subscribe((value) => this.average = value));
 
     this.subscriptions.concat(
       this.$agreement
-      .subscribe((value) => this.agreement = value));
+        .subscribe((value) => this.agreement = value));
   }
 
   ngAfterViewInit(): void {
     this.subscriptions.concat(
       this.$agreement
-      .pipe(filter((value) => value === 1))
-      .subscribe(() => this.fireConfettis()));
+        .pipe(filter((value) => value === 1))
+        .subscribe(() => this.fireConfettis()));
   }
 
   agreementClass(): string {
@@ -105,7 +109,7 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
     const domRect = this.agreementElement?.nativeElement.getBoundingClientRect();
     const x = (domRect.left + domRect.width / 2) / window.innerWidth;
     const y = (domRect.top + domRect.height / 2) / window.innerHeight;
-    const origin = { x: x, y: y };
+    const origin = {x: x, y: y};
     this.fireParticles(0.25, {
       origin: origin,
       spread: 26,
@@ -142,6 +146,12 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
       particleCount: Math.floor(200 * particleRatio)
     });
   }
+
+  private isNumeric(val?: string): boolean {
+    return !isNaN(Number(val));
+  }
+
+  protected readonly String = String;
 }
 
-type CardCount = Map<string, number>;
+type CardCount = Map<string, string>;

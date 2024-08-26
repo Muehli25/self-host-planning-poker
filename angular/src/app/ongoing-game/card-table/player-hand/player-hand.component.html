@@ -4,9 +4,15 @@
          [class.card-disabled]="playerState.spectator"
          [class.face-down]="playerState.hasPicked && playerState.hand === undefined"
          [class.dashed]="playerState.spectator || !playerState.hasPicked">
-      <div class="card-value" *ngIf="playerState.hand !== undefined && deck">
-        {{ displayCardValue(deck, playerState.hand) }}
-      </div>
+      @if (deck && playerState.hand !== undefined && playerState.hand !== "coffee") {
+        <div class="card-value">
+          {{ displayCardValue(deck, playerState.hand) }}
+        </div>
+      } @else if (playerState.hand === "coffee") {
+        <svg class="bi bi-cup" width="2em" height="2em" fill="currentColor" aria-hidden="true">
+          <use xlink:href="assets/bootstrap-icons.svg#cup"/>
+        </svg>
+      }
       <div class="card-value" *ngIf="playerState.spectator">
         <svg *transloco="let t" [attr.aria-labbel]="t('playerState.spectator')"
              class="bi bi-eye-fill" width="1em" height="1em" fill="currentColor">

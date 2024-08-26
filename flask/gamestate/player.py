@@ -1,4 +1,6 @@
 from typing import Optional
+from typing import Union
+
 
 from gamestate.exceptions import SpectatorCannotPlayError
 
@@ -10,7 +12,7 @@ class Player:
         self.__hand = None
         self.spectator = spectator
 
-    def set_hand(self, hand: int):
+    def set_hand(self, hand: Union[str, int]):
         if self.spectator is True:
             raise SpectatorCannotPlayError('Spectator cannot play')
         self.__hand = hand

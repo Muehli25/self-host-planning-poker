@@ -12,7 +12,7 @@ export interface Player {
 
 export interface PlayerState extends Player {
   hasPicked?: boolean;
-  hand?: number;
+  hand?: string;
 }
 
 export type GameState = Record<string, PlayerState>;

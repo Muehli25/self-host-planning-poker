@@ -1,16 +1,16 @@
-import { Component, OnDestroy } from '@angular/core';
-import { CardValue, Deck } from '../../model/deck';
-import { Subscription } from 'rxjs';
-import { CurrentGameService } from '../current-game.service';
-import { UserInformationService } from '../../shared/user-info/user-information.service';
-import { PickableCardComponent } from './card/pickable-card.component';
-import { NgIf, NgFor } from '@angular/common';
+import {Component, OnDestroy} from '@angular/core';
+import {CardValue, Deck} from '../../model/deck';
+import {Subscription} from 'rxjs';
+import {CurrentGameService} from '../current-game.service';
+import {UserInformationService} from '../../shared/user-info/user-information.service';
+import {PickableCardComponent} from './card/pickable-card.component';
+import {NgFor, NgIf} from '@angular/common';
 
 @Component({
-    selector: 'shpp-card-picker',
-    templateUrl: './card-picker.component.html',
-    standalone: true,
-    imports: [NgIf, NgFor, PickableCardComponent]
+  selector: 'shpp-card-picker',
+  templateUrl: './card-picker.component.html',
+  standalone: true,
+  imports: [NgIf, NgFor, PickableCardComponent]
 })
 export class CardPickerComponent implements OnDestroy {
   deck?: Deck
@@ -22,28 +22,29 @@ export class CardPickerComponent implements OnDestroy {
   private newGameSubscription: Subscription;
   private spectatorSubscription: Subscription;
   private gameRevealedSubscription: Subscription;
+  coffeeValue = {value: 'coffee', display: 'coffee'} as CardValue;
 
   constructor(private currentGame: CurrentGameService,
               private userInfoService: UserInformationService) {
     this.deckSubscription = currentGame.deck$
-    .subscribe((deck) => {
-      this.deck = deck;
-      this.selectedCard = undefined;
-    });
+      .subscribe((deck) => {
+        this.deck = deck;
+        this.selectedCard = undefined;
+      });
 
     this.newGameSubscription = this.currentGame.newGame$
-    .subscribe(() => this.selectedCard = undefined);
+      .subscribe(() => this.selectedCard = undefined);
 
     this.spectatorSubscription = this.userInfoService.spectatorObservable()
-    .subscribe((spectator: boolean) => {
-      this.isSpectator = spectator;
-      if (spectator) {
-        this.selectedCard = undefined;
-      }
-    });
+      .subscribe((spectator: boolean) => {
+        this.isSpectator = spectator;
+        if (spectator) {
+          this.selectedCard = undefined;
+        }
+      });
 
     this.gameRevealedSubscription = this.currentGame.revealed$
-    .subscribe((revealed: boolean) => this.isGameRevealed = revealed);
+      .subscribe((revealed: boolean) => this.isGameRevealed = revealed);
   }
 
   selectCard(card: CardValue): void {
