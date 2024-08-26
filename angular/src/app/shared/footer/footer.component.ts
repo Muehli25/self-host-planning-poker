@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { TranslocoDirective } from '@ngneat/transloco';
+import {TranslocoDirective} from "@jsverse/transloco";
+
 
 @Component({
   selector: 'shpp-footer',

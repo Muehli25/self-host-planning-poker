@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Subscription, switchMap } from 'rxjs';
 import { CurrentGameService } from './current-game.service';
 import { CardPickerComponent } from './card-picker/card-picker.component';

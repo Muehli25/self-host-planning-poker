@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserInformationService } from '../user-info/user-information.service';
-import { TranslocoDirective } from '@ngneat/transloco';
 import { debounceTime, Subject, Subscription } from "rxjs";
+import {TranslocoDirective} from "@jsverse/transloco";
 
 @Component({
     selector: 'shpp-player-name-form',
