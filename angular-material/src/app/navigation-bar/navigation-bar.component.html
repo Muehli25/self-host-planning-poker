@@ -1,0 +1,12 @@
+<mat-toolbar>
+  <span>Planning Poker</span>
+  <span class="spacer"></span>
+  <button mat-icon-button aria-label="Information Icon" [matMenuTriggerFor]="infoMenu">
+    <mat-icon>info</mat-icon>
+  </button>
+  <mat-menu #infoMenu="matMenu">
+    <button mat-menu-item>Github</button>
+    <button mat-menu-item>Dockerhub</button>
+    <button mat-menu-item>License</button>
+  </mat-menu>
+</mat-toolbar>
