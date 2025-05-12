@@ -1,16 +1,22 @@
 # Self-host Planning Poker
 
+**This is a fork of [axeleroy/self-host-planning-poker](https://github.com/axeleroy/self-host-planning-poker).**
+
 A hassle-free Planning Poker application to deploy on your NAS.
 
-[![Docker Hub](https://img.shields.io/docker/v/axeleroy/self-host-planning-poker?sort=semver&logo=docker)](https://hub.docker.com/r/axeleroy/self-host-planning-poker/tags)
-[![Docker Hub](https://img.shields.io/docker/pulls/axeleroy/self-host-planning-poker?logo=docker)](https://hub.docker.com/r/axeleroy/self-host-planning-poker/tags)
-[![GitHub release](https://img.shields.io/github/v/release/axeleroy/self-host-planning-poker?logo=github&logoColor=959DA5)](https://github.com/axeleroy/self-host-planning-poker/pkgs/container/self-host-planning-poker)
+[![Docker Hub](https://img.shields.io/docker/v/mhlnstdt/self-host-planning-poker?sort=semver&logo=docker)](https://hub.docker.com/r/mhlnstdt/self-host-planning-poker/tags)
+[![Docker Hub](https://img.shields.io/docker/pulls/mhlnstdt/self-host-planning-poker?logo=docker)](https://hub.docker.com/r/mhlnstdt/self-host-planning-poker/tags)
+[![GitHub release](https://img.shields.io/github/v/release/Muehli25/self-host-planning-poker?logo=github&logoColor=959DA5)](https://github.com/mhlnstdt/self-host-planning-poker/pkgs/container/self-host-planning-poker)
 
-[![GitHub last commit](https://img.shields.io/github/last-commit/axeleroy/self-host-planning-poker?logo=github&logoColor=959DA5)](https://github.com/axeleroy/self-host-planning-poker/commits/main)
-[![License](https://img.shields.io/github/license/axeleroy/self-host-planning-poker?logo=github&logoColor=959DA5)](https://github.com/axeleroy/self-host-planning-poker/blob/main/LICENSE)
-[![Tests](https://github.com/axeleroy/self-host-planning-poker/actions/workflows/tests.yml/badge.svg)](https://github.com/axeleroy/self-host-planning-poker/actions/workflows/tests.yml)
-[![Docker build](https://github.com/axeleroy/self-host-planning-poker/actions/workflows/publish.yml/badge.svg)](https://github.com/axeleroy/self-host-planning-poker/actions/workflows/publish.yml)
-[![Crowdin](https://badges.crowdin.net/self-host-planning-poker/localized.svg)](https://crowdin.com/project/self-host-planning-poker)
+[![GitHub last commit](https://img.shields.io/github/last-commit/Muehli25/self-host-planning-poker?logo=github&logoColor=959DA5)](https://github.com/Muehli25/self-host-planning-poker/commits/main)
+[![License](https://img.shields.io/github/license/Muehli25/self-host-planning-poker?logo=github&logoColor=959DA5)](https://github.com/Muehli25/self-host-planning-poker/blob/main/LICENSE)
+
+## Changes to the original Repository
+
+- Added question mark option (?) to all decks
+- updated Python dependencies
+- fixed path for overriding the css
+- small visual changes
 
 ## What is it?
 
@@ -41,7 +47,7 @@ All you need is to create a volume to persist the games settings (ID, name and d
 docker run \
   -v planning-poker-data:/data \
   -p 8000:8000 \
-  axeleroy/self-host-planning-poker:latest
+  mhlnstdt/self-host-planning-poker:latest
 ```
 
 ### docker-compose
@@ -49,7 +55,7 @@ docker run \
 version: "3"
 services:
   planning-poker:
-    image: axeleroy/self-host-planning-poker:latest
+    image: mhlnstdt/self-host-planning-poker:latest
     ports:
       - 8000:8000
     volumes:
@@ -70,7 +76,7 @@ Refer to [Socket.IO's documentation](https://socket.io/docs/v4/reverse-proxy/)  
 
 ### Customization
 
-See [Customizing the application's style and icon](https://github.com/axeleroy/self-host-planning-poker/wiki/Customizing-the-application's-style-and-icon).
+See [Customizing the application's style and icon](https://github.com/Muehli25/self-host-planning-poker/wiki/Customizing-the-application's-style-and-icon).
 
 ## Getting involved
 
@@ -82,7 +88,7 @@ Don't forget to mention the issue you want to close 😉
 
 ### I'm a user and I need help / I encountered a bug / I have a feature request
 
-[Open an issue](https://github.com/axeleroy/self-host-planning-poker/issues/new) and I'll take a look at it.
+[Open an issue](https://github.com/Muehli25/self-host-planning-poker/issues/new) and I'll take a look at it.
 
 ### I'm a user and want to contribute translations
 
@@ -149,7 +155,7 @@ npm start
 
 ```sh
 # After checking out the project
-docker build . -t axeleroy/self-host-planning-poker:custom
+docker build . -t mhlnstdt/self-host-planning-poker:custom
 # Alternatively, if you don't want to checkout the project
-docker build https://github.com/axeleroy/self-host-planning-poker -t axeleroy/self-host-planning-poker:custom
+docker build https://github.com/Muehli25/self-host-planning-poker -t mhlnstdt/self-host-planning-poker:custom
 ```
