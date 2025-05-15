@@ -9,7 +9,6 @@ import { NgIf, NgFor } from '@angular/common';
 @Component({
     selector: 'shpp-card-picker',
     templateUrl: './card-picker.component.html',
-    standalone: true,
     imports: [NgIf, NgFor, PickableCardComponent]
 })
 export class CardPickerComponent implements OnDestroy {

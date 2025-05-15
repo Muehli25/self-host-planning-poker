@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserInformationService } from '../user-info/user-information.service';
-import { TranslocoDirective } from '@ngneat/transloco';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { debounceTime, Subject, Subscription } from "rxjs";
 
 @Component({
     selector: 'shpp-player-name-form',
     templateUrl: './player-name-form.component.html',
-    standalone: true,
     imports: [TranslocoDirective, ReactiveFormsModule]
 })
 export class PlayerNameFormComponent implements OnDestroy {

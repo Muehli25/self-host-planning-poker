@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { NgbOffcanvas, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { UserInformationService } from '../../shared/user-info/user-information.service';
 import { PlayerNameFormComponent } from '../../shared/player-name-form/player-name-form.component';
-import { TranslocoDirective } from '@ngneat/transloco';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
     selector: 'shpp-nav-player-info',
     templateUrl: './nav-player-info.component.html',
-    standalone: true,
     imports: [TranslocoDirective, PlayerNameFormComponent, NgbTooltip]
 })
 export class NavPlayerInfoComponent {

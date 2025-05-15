@@ -5,9 +5,8 @@ import { NgFor } from '@angular/common';
 
 
 @Component({
-  standalone: true,
-	selector: 'shpp-toasts',
-	template: `
+    selector: 'shpp-toasts',
+    template: `
 		<ngb-toast
 			*ngFor="let toast of toastService.toasts"
 			[class]="toast.className"
@@ -18,7 +17,7 @@ import { NgFor } from '@angular/common';
 			{{ toast.text }}
 		</ngb-toast>
 	`,
-  imports: [ NgFor, NgbToast ]
+    imports: [NgFor, NgbToast]
 })
 export class ToastsContainerComponent {
   @HostBinding('class') classAttr = 'toast-container position-fixed top-0 end-0 p-3';
