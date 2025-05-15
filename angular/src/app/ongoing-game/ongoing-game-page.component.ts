@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { Subscription, switchMap } from 'rxjs';
 import { CurrentGameService } from './current-game.service';
 import { CardPickerComponent } from './card-picker/card-picker.component';
@@ -16,16 +16,15 @@ import { ContainerComponent } from '../shared/container/container.component';
     selector: 'shpp-ongoing-game-page',
     templateUrl: './ongoing-game-page.component.html',
     styleUrls: ['./ongoing-game-page.component.scss'],
-    standalone: true,
     imports: [
-      ContainerComponent,
-      NavGameNameComponent,
-      NavGameInfoComponent,
-      NavPlayerInfoComponent,
-      CardTableComponent,
-      NgIf,
-      TurnSummaryComponent,
-      CardPickerComponent
+        ContainerComponent,
+        NavGameNameComponent,
+        NavGameInfoComponent,
+        NavPlayerInfoComponent,
+        CardTableComponent,
+        NgIf,
+        TurnSummaryComponent,
+        CardPickerComponent
     ]
 })
 export default class OngoingGamePageComponent implements OnDestroy {

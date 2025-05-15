@@ -5,7 +5,7 @@ import { BehaviorSubject, filter, map, Observable, Subject } from 'rxjs';
 import { ErrorMessage, GameInfo, GameState } from '../model/events';
 import { Deck, decksDict } from '../model/deck';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { HashMap, TranslocoService } from '@ngneat/transloco';
+import { HashMap, TranslocoService } from '@jsverse/transloco';
 import { UserInformationService } from '../shared/user-info/user-information.service';
 import { ToastService } from '../shared/toast/toast.service';
 import { PathLocationStrategy } from '@angular/common';

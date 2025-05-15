@@ -1,18 +1,17 @@
-import { Component, OnDestroy } from '@angular/core';
-import { GameState } from '../../model/events';
-import { Subscription } from 'rxjs';
-import { Deck } from '../../model/deck';
-import { CurrentGameService } from '../current-game.service';
-import { PlayerHandComponent } from './player-hand/player-hand.component';
-import { KeyValuePipe, NgFor } from '@angular/common';
-import { TranslocoDirective } from '@ngneat/transloco';
+import {Component, OnDestroy} from '@angular/core';
+import {GameState} from '../../model/events';
+import {Subscription} from 'rxjs';
+import {Deck} from '../../model/deck';
+import {CurrentGameService} from '../current-game.service';
+import {PlayerHandComponent} from './player-hand/player-hand.component';
+import {KeyValuePipe, NgFor} from '@angular/common';
+import {TranslocoDirective} from '@jsverse/transloco';
 
 @Component({
-    selector: 'shpp-card-table',
-    templateUrl: './card-table.component.html',
-    styleUrls: ['./card-table.component.scss'],
-    standalone: true,
-    imports: [TranslocoDirective, NgFor, PlayerHandComponent, KeyValuePipe]
+  selector: 'shpp-card-table',
+  templateUrl: './card-table.component.html',
+  styleUrls: ['./card-table.component.scss'],
+  imports: [TranslocoDirective, NgFor, PlayerHandComponent, KeyValuePipe]
 })
 export class CardTableComponent implements OnDestroy {
   state: GameState = {}
@@ -25,15 +24,15 @@ export class CardTableComponent implements OnDestroy {
 
   constructor(private currentGameService: CurrentGameService) {
     this.stateSubscription = this.currentGameService.state$
-    .subscribe((state: GameState) => {
-      this.state = state;
-    });
+      .subscribe((state: GameState) => {
+        this.state = state;
+      });
 
     this.deckSubscription = currentGameService.deck$
-    .subscribe((deck: Deck) => this.deck = deck);
+      .subscribe((deck: Deck) => this.deck = deck);
 
     this.revealedSubscription = currentGameService.revealed$
-    .subscribe((revealed: boolean) => this.canReveal = !revealed)
+      .subscribe((revealed: boolean) => this.canReveal = !revealed)
   }
 
   revealCards(): void {

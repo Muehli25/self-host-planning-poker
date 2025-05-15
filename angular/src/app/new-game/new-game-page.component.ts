@@ -10,16 +10,15 @@ import { FooterComponent } from '../shared/footer/footer.component';
 import { PathLocationStrategy } from '@angular/common';
 
 @Component({
-  standalone: true,
-  selector: 'shpp-new-game-page',
-  templateUrl: './new-game-page.component.html',
-  styleUrls: [ './new-game-page.component.scss' ],
-  imports: [
-    GameFormComponent,
-    ContainerComponent,
-    NavAppTitleComponent,
-    FooterComponent
-  ]
+    selector: 'shpp-new-game-page',
+    templateUrl: './new-game-page.component.html',
+    styleUrls: ['./new-game-page.component.scss'],
+    imports: [
+        GameFormComponent,
+        ContainerComponent,
+        NavAppTitleComponent,
+        FooterComponent
+    ]
 })
 export default class NewGamePageComponent {
 
