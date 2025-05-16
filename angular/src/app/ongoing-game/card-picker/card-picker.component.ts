@@ -62,6 +62,7 @@ export class CardPickerComponent implements OnDestroy {
     this.deckSubscription.unsubscribe();
     this.newGameSubscription.unsubscribe();
     this.spectatorSubscription.unsubscribe();
+    this.gameRevealedSubscription.unsubscribe();
   }
 
 }

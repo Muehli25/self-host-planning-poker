@@ -2,7 +2,13 @@
      [class.clickable]="!disabled"
      [class.card-disabled]="disabled"
      [class.selected]="selected">
+  @if (cardValue?.display != "coffee") {
   <div class="card-value">
     {{ cardValue?.display }}
   </div>
+  } @else {
+    <svg class="bi bi-cup" width="2em" height="2em" fill="currentColor" aria-hidden="true">
+      <use xlink:href="assets/bootstrap-icons.svg#cup"/>
+    </svg>
+  }
 </div>
