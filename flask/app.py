@@ -17,6 +17,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 
 if app.config['DEBUG']:
+    print('Running in debug mode.')
     real_db = SqliteDatabase('database.db')
     socketio = SocketIO(app, cors_allowed_origins=[
         'http://localhost:4200', 'http://localhost:5000',
@@ -162,6 +163,12 @@ def end_turn():
     emit('state', state, to=game_id, json=True)
     emit('info', info, to=game_id, json=True)
     emit('new_game', to=game_id)
+
+@socketio.event
+def party():
+    game_id = session['game_id']
+
+    emit('party', True, to=game_id, json=True)
 
 
 @socketio.on_error()

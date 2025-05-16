@@ -1,18 +1,18 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { PlayerState } from '../../model/events';
-import { filter, map, Observable, Subscription, tap, withLatestFrom } from 'rxjs';
-import { Deck, decksDict, displayCardValue } from '../../model/deck';
-import { AsyncPipe, KeyValue, KeyValuePipe, NgClass, NgFor } from '@angular/common';
-import { CurrentGameService } from '../current-game.service';
+import {AfterViewInit, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
+import {PlayerState} from '../../model/events';
+import {filter, map, Observable, Subscription, tap, withLatestFrom} from 'rxjs';
+import {Deck, decksDict, displayCardValue} from '../../model/deck';
+import {AsyncPipe, KeyValue, KeyValuePipe, NgClass, NgFor} from '@angular/common';
+import {CurrentGameService} from '../current-game.service';
 import confetti from 'canvas-confetti';
-import { TranslocoDecimalPipe, TranslocoPercentPipe } from '@jsverse/transloco-locale';
-import { TranslocoDirective } from '@jsverse/transloco';
+import {TranslocoDecimalPipe, TranslocoPercentPipe} from '@jsverse/transloco-locale';
+import {TranslocoDirective} from '@jsverse/transloco';
 
 @Component({
-    selector: 'shpp-turn-summary',
-    templateUrl: './turn-summary.component.html',
-    styleUrls: ['./turn-summary.component.scss'],
-    imports: [TranslocoDirective, NgFor, NgClass, AsyncPipe, KeyValuePipe, TranslocoDecimalPipe, TranslocoPercentPipe]
+  selector: 'shpp-turn-summary',
+  templateUrl: './turn-summary.component.html',
+  styleUrls: ['./turn-summary.component.scss'],
+  imports: [TranslocoDirective, NgFor, NgClass, AsyncPipe, KeyValuePipe, TranslocoDecimalPipe, TranslocoPercentPipe]
 })
 export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
   private subscriptions: Subscription[] = [];
@@ -35,33 +35,33 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
 
   constructor(private currentGameService: CurrentGameService) {
     this.$playerStates = this.currentGameService.state$
-    .pipe(
-      withLatestFrom(this.currentGameService.gameInfo$),
-      filter(([, gameInfo]) => gameInfo !== null && gameInfo.revealed),
-      tap(([, gameInfo]) => {
-        if (gameInfo) {
-          this.deck = decksDict[gameInfo.deck];
-        }
-      }),
-      map(([gameState]) => Object.values(gameState)),
-      map((playerStates: PlayerState[]) => playerStates.filter((state) => state.hand !== undefined && state.hand !== null))
-    );
+      .pipe(
+        withLatestFrom(this.currentGameService.gameInfo$),
+        filter(([, gameInfo]) => gameInfo !== null && gameInfo.revealed),
+        tap(([, gameInfo]) => {
+          if (gameInfo) {
+            this.deck = decksDict[gameInfo.deck];
+          }
+        }),
+        map(([gameState]) => Object.values(gameState)),
+        map((playerStates: PlayerState[]) => playerStates.filter((state) => state.hand !== undefined && state.hand !== null))
+      );
 
     this.$counts = this.$playerStates
-    .pipe(map((players: PlayerState[]) =>
-      players
-      .map((player) => player.hand || 0)
-      .reduce((previous, current) => {
-        let num = previous.get(current.toString()) || 0;
-        previous.set(current.toString(), num + 1);
-        return previous;
-      }, new Map() as CardCount)
-    ));
+      .pipe(map((players: PlayerState[]) =>
+        players
+          .map((player) => player.hand || 0)
+          .reduce((previous, current) => {
+            let num = previous.get(current.toString()) || 0;
+            previous.set(current.toString(), num + 1);
+            return previous;
+          }, new Map() as CardCount)
+      ));
 
     this.$agreement = this.$counts
-    .pipe(
-      withLatestFrom(this.$playerStates),
-      map(([counts, players]) => (Math.max(0, ...counts.values()) / players.length || 0)));
+      .pipe(
+        withLatestFrom(this.$playerStates),
+        map(([counts, players]) => (Math.max(0, ...counts.values()) / players.length || 0)));
 
     this.subscriptions.concat(
       this.$playerStates.pipe(
@@ -69,18 +69,24 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
           players
             .filter(player => player.hand != -1)
             .reduce((prev, current) => prev + (current.hand || 0), 0) / players.filter(player => player.hand != -1).length || 0))
-      .subscribe((value) => this.average = value));
+        .subscribe((value) => this.average = value));
 
     this.subscriptions.concat(
       this.$agreement
-      .subscribe((value) => this.agreement = value));
+        .subscribe((value) => this.agreement = value));
   }
 
   ngAfterViewInit(): void {
     this.subscriptions.concat(
       this.$agreement
-      .pipe(filter((value) => value === 1))
-      .subscribe(() => this.fireConfettis()));
+        .pipe(filter((value) => value === 1))
+        .subscribe(() => this.fireConfettis()));
+
+    this.subscriptions.concat(
+      this.currentGameService.party$.subscribe((party) => {
+        if (party) this.fireConfettis();
+      })
+    )
   }
 
   agreementClass(): string {
@@ -103,7 +109,7 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
     const domRect = this.agreementElement?.nativeElement.getBoundingClientRect();
     const x = (domRect.left + domRect.width / 2) / window.innerWidth;
     const y = (domRect.top + domRect.height / 2) / window.innerHeight;
-    const origin = { x: x, y: y };
+    const origin = {x: x, y: y};
     this.fireParticles(0.25, {
       origin: origin,
       spread: 26,

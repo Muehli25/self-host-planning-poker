@@ -25,6 +25,7 @@ export class CurrentGameService {
   private stateSubject = new BehaviorSubject<GameState>({});
   private infoSubject = new BehaviorSubject<GameInfo | null>(null);
   private newGameSubject = new Subject<void>();
+  private partySubject = new Subject<boolean>();
 
   constructor(private router: Router,
               private userInformation: UserInformationService,
@@ -47,6 +48,7 @@ export class CurrentGameService {
     this.socket.on('state', (state: GameState) => this.stateSubject.next(state));
     this.socket.on('info', (info: GameInfo) => this.infoSubject.next(info));
     this.socket.on('new_game', () => this.newGameSubject.next());
+    this.socket.on('party', (party: boolean) => this.partySubject.next(party));
 
     this.socket.on('disconnect', (reason) => {
       if (reason !== 'io client disconnect') {
@@ -89,6 +91,10 @@ export class CurrentGameService {
 
   public get newGame$(): Observable<void>{
     return this.newGameSubject.asObservable();
+  }
+
+  public get party$(): Observable<boolean> {
+    return this.partySubject.asObservable();
   }
 
   public get revealed$(): Observable<boolean> {
@@ -154,6 +160,10 @@ export class CurrentGameService {
 
   public endTurn(): void {
     this.socket.emit('end_turn', (response?: ErrorMessage) => this.handleError(response));
+  }
+
+  public party(): void {
+    this.socket.emit('party', (response?: ErrorMessage) => this.handleError(response));
   }
 
   private handleError(error?: ErrorMessage | any): void {
