@@ -1,0 +1,9 @@
+services:
+  planning-poker:
+    build: .
+    ports:
+      - 8000:8000
+    volumes:
+      - planning-poker-data:/data
+volumes:
+  planning-poker-data: {}

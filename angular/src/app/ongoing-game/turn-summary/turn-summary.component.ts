@@ -20,8 +20,8 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
   displayCardValue = displayCardValue;
   Number = Number;
   round = Math.round;
-  valueDescOrder = (a: KeyValue<string, number>, b: KeyValue<string, number>): number =>
-    a.value > b.value ? -1 : (b.value > a.value ? 1 : 0)
+  valueDescOrder = (a: KeyValue<string, string>, b: KeyValue<string, string>): number =>
+    a.value > b.value ? -1 : (Number(b.value) > Number(a.value) ? 1 : 0)
 
   deck: Deck = decksDict['FIBONACCI'];
   average = 0;
@@ -52,8 +52,11 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
         players
           .map((player) => player.hand || 0)
           .reduce((previous, current) => {
-            let num = previous.get(current.toString()) || 0;
-            previous.set(current.toString(), num + 1);
+            let numString = previous.get(current.toString()) || "0";
+            let num = 0;
+            if (this.isNumeric(numString)) num = Number(numString)
+            num += 1
+            previous.set(current.toString(), num.toString());
             return previous;
           }, new Map() as CardCount)
       ));
@@ -61,14 +64,15 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
     this.$agreement = this.$counts
       .pipe(
         withLatestFrom(this.$playerStates),
-        map(([counts, players]) => (Math.max(0, ...counts.values()) / players.length || 0)));
+        map(([counts, players]) => (Math.max(0, Number(...counts.values())) / players.length || 0)));
 
     this.subscriptions.concat(
       this.$playerStates.pipe(
-        map((players: PlayerState[]) =>
-          players
-            .filter(player => player.hand != -1)
-            .reduce((prev, current) => prev + (current.hand || 0), 0) / players.filter(player => player.hand != -1).length || 0))
+        map((players: PlayerState[]) => {
+          const validPlayers = players.filter((player) => player.hand !== "-1" && this.isNumeric(player.hand));
+          const total = validPlayers.reduce((prev, current) => prev + (Number(current.hand) || 0), 0);
+          return validPlayers.length > 0 ? total / validPlayers.length : 0;
+        }))
         .subscribe((value) => this.average = value));
 
     this.subscriptions.concat(
@@ -146,6 +150,12 @@ export class TurnSummaryComponent implements AfterViewInit, OnDestroy {
       particleCount: Math.floor(200 * particleRatio)
     });
   }
+
+  private isNumeric(val?: string): boolean {
+    return !isNaN(Number(val));
+  }
+
+  protected readonly String = String;
 }
 
-type CardCount = Map<string, number>;
+type CardCount = Map<string, string>;
