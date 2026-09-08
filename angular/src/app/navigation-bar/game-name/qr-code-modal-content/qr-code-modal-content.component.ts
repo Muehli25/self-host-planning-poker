@@ -4,12 +4,11 @@ import { TranslocoDirective } from "@ngneat/transloco";
 import QRCode from "qrcode"
 
 @Component({
-  selector: 'shpp-qr-code-modal-content',
-  standalone: true,
-  templateUrl: './qr-code-modal-content.component.html',
-  imports: [
-    TranslocoDirective
-  ]
+    selector: 'shpp-qr-code-modal-content',
+    templateUrl: './qr-code-modal-content.component.html',
+    imports: [
+        TranslocoDirective
+    ]
 })
 export class QrCodeModalContentComponent implements AfterViewInit {
   activeModal = inject(NgbActiveModal);

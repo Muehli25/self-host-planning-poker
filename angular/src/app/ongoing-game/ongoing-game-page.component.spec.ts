@@ -3,6 +3,7 @@ import OngoingGamePageComponent from './ongoing-game-page.component';
 import { CurrentGameService } from './current-game.service';
 import { Title } from '@angular/platform-browser';
 import { TranslocoTestingModule } from '@ngneat/transloco';
+import { provideTranslocoLocale } from '@ngneat/transloco-locale';
 import { BehaviorSubject, of } from 'rxjs';
 import { GameInfo, GameState } from '../model/events';
 import { PathLocationStrategy } from '@angular/common';
@@ -45,6 +46,7 @@ describe('OngoingGamePageComponent', () => {
         })
       ],
       providers: [
+        provideTranslocoLocale(),
         { provide: CurrentGameService, useValue: currentGameService },
         { provide: Title, useValue: titleService },
         {

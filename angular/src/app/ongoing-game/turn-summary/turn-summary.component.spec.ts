@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TurnSummaryComponent } from './turn-summary.component';
 import { CurrentGameService } from '../current-game.service';
 import { TranslocoTestingModule } from '@ngneat/transloco';
+import { provideTranslocoLocale } from '@ngneat/transloco-locale';
 import { BehaviorSubject } from 'rxjs';
 import { GameInfo, GameState } from '../../model/events';
 
@@ -40,6 +41,7 @@ describe('TurnSummaryComponent', () => {
         })
       ],
       providers: [
+        provideTranslocoLocale(),
         { provide: CurrentGameService, useValue: currentGameService }
       ]
     }).compileComponents();

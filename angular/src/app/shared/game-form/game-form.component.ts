@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Deck, decks, decksDict, displayDeckValues } from '../../model/deck';
-import { NgFor } from '@angular/common';
+
 import { TranslocoDirective } from '@ngneat/transloco';
 
 @Component({
-  standalone: true,
-  selector: 'shpp-game-form',
-  templateUrl: './game-form.component.html',
-  imports: [TranslocoDirective, NgFor, ReactiveFormsModule]
+    selector: 'shpp-game-form',
+    templateUrl: './game-form.component.html',
+    imports: [TranslocoDirective, ReactiveFormsModule]
 })
 export class GameFormComponent implements OnInit{
+  private fb = inject(FormBuilder);
+
 
   formGroup: FormGroup;
   decks = decks
@@ -22,7 +23,7 @@ export class GameFormComponent implements OnInit{
   deck?: string;
   @Output() gameOutput = new EventEmitter<{name: string, deck: Deck}>();
 
-  constructor(private fb: FormBuilder) {
+  constructor() {
     this.formGroup = this.fb.group({
       name: [ '', [ Validators.required, Validators.minLength(1) ]],
       deck: [ decksDict['FIBONACCI'], Validators.required ]

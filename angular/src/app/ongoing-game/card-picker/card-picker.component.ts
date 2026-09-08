@@ -1,18 +1,20 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { CardValue, Deck } from '../../model/deck';
 import { Subscription } from 'rxjs';
 import { CurrentGameService } from '../current-game.service';
 import { UserInformationService } from '../../shared/user-info/user-information.service';
 import { PickableCardComponent } from './card/pickable-card.component';
-import { NgIf, NgFor } from '@angular/common';
+
 
 @Component({
     selector: 'shpp-card-picker',
     templateUrl: './card-picker.component.html',
-    standalone: true,
-    imports: [NgIf, NgFor, PickableCardComponent]
+    imports: [PickableCardComponent]
 })
 export class CardPickerComponent implements OnDestroy {
+  private currentGame = inject(CurrentGameService);
+  private userInfoService = inject(UserInformationService);
+
   deck?: Deck
   selectedCard?: CardValue;
   isSpectator = false;
@@ -23,8 +25,9 @@ export class CardPickerComponent implements OnDestroy {
   private spectatorSubscription: Subscription;
   private gameRevealedSubscription: Subscription;
 
-  constructor(private currentGame: CurrentGameService,
-              private userInfoService: UserInformationService) {
+  constructor() {
+    const currentGame = this.currentGame;
+
     this.deckSubscription = currentGame.deck$
     .subscribe((deck) => {
       this.deck = deck;

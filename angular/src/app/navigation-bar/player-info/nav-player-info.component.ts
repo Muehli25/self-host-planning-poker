@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgbOffcanvas, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { UserInformationService } from '../../shared/user-info/user-information.service';
 import { PlayerNameFormComponent } from '../../shared/player-name-form/player-name-form.component';
@@ -7,13 +7,12 @@ import { TranslocoDirective } from '@ngneat/transloco';
 @Component({
     selector: 'shpp-nav-player-info',
     templateUrl: './nav-player-info.component.html',
-    standalone: true,
     imports: [TranslocoDirective, PlayerNameFormComponent, NgbTooltip]
 })
 export class NavPlayerInfoComponent {
-  constructor(public userInformation: UserInformationService,
-              private offcanvaseService: NgbOffcanvas) {
-  }
+  userInformation = inject(UserInformationService);
+  private offcanvaseService = inject(NgbOffcanvas);
+
 
   toggleSpectator(): void {
     this.userInformation.setSpectator(!this.userInformation.isSpectator());

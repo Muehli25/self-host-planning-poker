@@ -16,14 +16,15 @@ describe('ToastsContainerComponent', () => {
     fixture = TestBed.createComponent(ToastsContainerComponent);
     component = fixture.componentInstance;
     toastService = TestBed.inject(ToastService);
-    fixture.detectChanges();
   });
 
   it('should create component', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
   it('should apply default host class and style attributes', () => {
+    fixture.detectChanges();
     expect(component.classAttr).toContain('toast-container position-fixed');
     expect(component.styleAttr).toContain('z-index: 1200');
   });

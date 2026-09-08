@@ -5,7 +5,7 @@ import { UserInformationService } from '../shared/user-info/user-information.ser
 import { ToastService } from '../shared/toast/toast.service';
 import { TranslocoTestingModule } from '@ngneat/transloco';
 import { PathLocationStrategy } from '@angular/common';
-import { BehaviorSubject, of } from 'rxjs';
+import { of } from 'rxjs';
 import { decksDict } from '../model/deck';
 
 describe('CurrentGameService', () => {
