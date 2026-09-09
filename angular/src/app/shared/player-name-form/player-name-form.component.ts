@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserInformationService } from '../user-info/user-information.service';
 import { TranslocoDirective } from '@ngneat/transloco';
@@ -7,6 +7,7 @@ import { debounceTime, Subject, Subscription } from "rxjs";
 @Component({
     selector: 'shpp-player-name-form',
     templateUrl: './player-name-form.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TranslocoDirective, ReactiveFormsModule]
 })
 export class PlayerNameFormComponent implements OnDestroy {

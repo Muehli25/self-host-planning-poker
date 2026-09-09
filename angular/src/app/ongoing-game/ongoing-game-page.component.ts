@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslocoService } from '@ngneat/transloco';
 import { Subscription, switchMap } from 'rxjs';
@@ -16,6 +16,7 @@ import { ContainerComponent } from '../shared/container/container.component';
     selector: 'shpp-ongoing-game-page',
     templateUrl: './ongoing-game-page.component.html',
     styleUrls: ['./ongoing-game-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
     ContainerComponent,
     NavGameNameComponent,

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CurrentGameService } from '../../ongoing-game/current-game.service';
 import { GameInfo } from '../../model/events';
 import { Subscription } from 'rxjs';
@@ -12,6 +12,7 @@ import { QrCodeModalContentComponent } from "./qr-code-modal-content/qr-code-mod
 @Component({
     selector: 'shpp-game-name',
     templateUrl: './nav-game-name.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TranslocoDirective, NgbTooltip]
 })
 export class NavGameNameComponent implements OnDestroy {

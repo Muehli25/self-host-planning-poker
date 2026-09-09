@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
 import { GameState } from '../../model/events';
 import { Subscription } from 'rxjs';
 import { Deck } from '../../model/deck';
@@ -11,6 +11,7 @@ import { TranslocoDirective } from '@ngneat/transloco';
     selector: 'shpp-card-table',
     templateUrl: './card-table.component.html',
     styleUrls: ['./card-table.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TranslocoDirective, PlayerHandComponent, KeyValuePipe]
 })
 export class CardTableComponent implements OnDestroy {

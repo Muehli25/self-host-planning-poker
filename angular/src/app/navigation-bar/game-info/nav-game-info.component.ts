@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
 import { GameInfo } from '../../model/events';
 import { CurrentGameService } from '../../ongoing-game/current-game.service';
 import { Deck } from '../../model/deck';
@@ -11,6 +11,7 @@ import { TranslocoDirective } from '@ngneat/transloco';
 @Component({
     selector: 'shpp-game-info',
     templateUrl: './nav-game-info.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TranslocoDirective, NgbTooltip, GameFormComponent]
 })
 export class NavGameInfoComponent implements OnDestroy {

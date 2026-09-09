@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Deck, decks, decksDict, displayDeckValues } from '../../model/deck';
 
@@ -7,6 +7,7 @@ import { TranslocoDirective } from '@ngneat/transloco';
 @Component({
     selector: 'shpp-game-form',
     templateUrl: './game-form.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TranslocoDirective, ReactiveFormsModule]
 })
 export class GameFormComponent implements OnInit{

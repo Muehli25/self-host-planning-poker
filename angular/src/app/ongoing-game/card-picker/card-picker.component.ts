@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CardValue, Deck } from '../../model/deck';
 import { Subscription } from 'rxjs';
 import { CurrentGameService } from '../current-game.service';
@@ -9,6 +9,7 @@ import { PickableCardComponent } from './card/pickable-card.component';
 @Component({
     selector: 'shpp-card-picker',
     templateUrl: './card-picker.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [PickableCardComponent]
 })
 export class CardPickerComponent implements OnDestroy {

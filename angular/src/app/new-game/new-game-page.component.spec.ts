@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { PathLocationStrategy } from '@angular/common';
 import { TranslocoTestingModule } from '@ngneat/transloco';
 import { decksDict } from '../model/deck';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('NewGamePageComponent', () => {
   let component: NewGamePageComponent;
@@ -20,18 +20,20 @@ describe('NewGamePageComponent', () => {
     pls.getBaseHref.and.returnValue('/');
 
     await TestBed.configureTestingModule({
-    imports: [NewGamePageComponent,
+      imports: [
+        NewGamePageComponent,
         TranslocoTestingModule.forRoot({
-            translocoConfig: { availableLangs: ['en'], defaultLang: 'en' },
-            langs: { en: {} }
-        })],
-    providers: [
+          translocoConfig: { availableLangs: ['en'], defaultLang: 'en' },
+          langs: { en: {} }
+        })
+      ],
+      providers: [
         { provide: Router, useValue: router },
         { provide: PathLocationStrategy, useValue: pls },
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(),
         provideHttpClientTesting()
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NewGamePageComponent);
     component = fixture.componentInstance;

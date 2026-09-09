@@ -1,4 +1,4 @@
-import { Component, HostBinding, inject } from '@angular/core';
+import { Component, HostBinding, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ToastService } from './toast.service';
 import { NgbToast } from '@ng-bootstrap/ng-bootstrap';
 
@@ -18,6 +18,7 @@ import { NgbToast } from '@ng-bootstrap/ng-bootstrap';
 		  </ngb-toast>
 		}
 		`,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgbToast]
 })
 export class ToastsContainerComponent {
