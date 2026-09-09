@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserInformationService } from '../user-info/user-information.service';
 import { TranslocoDirective } from '@ngneat/transloco';
@@ -7,10 +7,13 @@ import { debounceTime, Subject, Subscription } from "rxjs";
 @Component({
     selector: 'shpp-player-name-form',
     templateUrl: './player-name-form.component.html',
-    standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TranslocoDirective, ReactiveFormsModule]
 })
 export class PlayerNameFormComponent implements OnDestroy {
+  private fb = inject(FormBuilder);
+  private userInformation = inject(UserInformationService);
+
   formGroup: FormGroup;
 
   @Input()
@@ -20,8 +23,7 @@ export class PlayerNameFormComponent implements OnDestroy {
   private subscription?: Subscription;
   private subject: Subject<void>
 
-  constructor(private fb: FormBuilder,
-              private userInformation: UserInformationService) {
+  constructor() {
     this.formGroup = this.fb.group({
       username: [ this.userInformation.getName(), [Validators.required, Validators.minLength(1)]]
     });

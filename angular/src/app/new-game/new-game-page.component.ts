@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Deck } from '../model/deck';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -10,22 +10,22 @@ import { FooterComponent } from '../shared/footer/footer.component';
 import { PathLocationStrategy } from '@angular/common';
 
 @Component({
-  standalone: true,
-  selector: 'shpp-new-game-page',
-  templateUrl: './new-game-page.component.html',
-  styleUrls: [ './new-game-page.component.scss' ],
-  imports: [
-    GameFormComponent,
-    ContainerComponent,
-    NavAppTitleComponent,
-    FooterComponent
-  ]
+    selector: 'shpp-new-game-page',
+    templateUrl: './new-game-page.component.html',
+    styleUrls: ['./new-game-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [
+        GameFormComponent,
+        ContainerComponent,
+        NavAppTitleComponent,
+        FooterComponent
+    ]
 })
 export default class NewGamePageComponent {
+  private http = inject(HttpClient);
+  private router = inject(Router);
+  private pls = inject(PathLocationStrategy);
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              private pls: PathLocationStrategy) { }
 
   onNewGame(newGame: {name: string, deck: Deck}): void {
     const body = {

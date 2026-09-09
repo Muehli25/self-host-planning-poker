@@ -1,0 +1,17 @@
+services:
+  planning-poker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: self-host-planning-poker:local
+    container_name: planning-poker
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ROOT=/
+    volumes:
+      - planning-poker-data:/data
+    restart: unless-stopped
+
+volumes:
+  planning-poker-data:

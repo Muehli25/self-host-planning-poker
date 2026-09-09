@@ -14,6 +14,12 @@ import { PathLocationStrategy } from '@angular/common';
   providedIn: 'root'
 })
 export class CurrentGameService {
+  private router = inject(Router);
+  private userInformation = inject(UserInformationService);
+  private transloco = inject(TranslocoService);
+  private toastService = inject(ToastService);
+  private pls = inject(PathLocationStrategy);
+
   private readonly totalAttempts = 10;
   private readonly reconnectDelaySeconds = 5;
   private readonly retries = 5;
@@ -26,11 +32,7 @@ export class CurrentGameService {
   private infoSubject = new BehaviorSubject<GameInfo | null>(null);
   private newGameSubject = new Subject<void>();
 
-  constructor(private router: Router,
-              private userInformation: UserInformationService,
-              private transloco: TranslocoService,
-              private toastService: ToastService,
-              private pls: PathLocationStrategy) {
+  constructor() {
     this.manager = new Manager(environment.backendRootOverride ?? window.location.origin,
       {
         path: `${this.pls.getBaseHref()}socket.io/`,
